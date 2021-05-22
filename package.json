@@ -1,5 +1,5 @@
 {
-  "name": "serverless-typescript-express-example",
+  "name": "mail-api",
   "version": "0.0.0",
   "description": "Express application with typescript",
   "scripts": {
