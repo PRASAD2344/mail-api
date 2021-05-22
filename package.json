@@ -1,6 +1,6 @@
 {
   "name": "mail-api",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Express application with typescript",
   "scripts": {
     "start": "serverless offline",
