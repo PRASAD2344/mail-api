@@ -1,4 +1,3 @@
-
 {
   "compilerOptions": {
     "target": "es6",
@@ -6,5 +5,9 @@
     "strict": true,
     "rootDir": "src",
     "outDir": "build"
-  }
+  },
+  "typeRoots": [
+    "./src/types",
+    "./node_modules/@types/"
+  ]
 }

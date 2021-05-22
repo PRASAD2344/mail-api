@@ -1,28 +1,28 @@
 import * as express from "express";
+import * as imapController from "./controllers/imap";
+import * as  asyncHandler from "express-async-handler";
+import * as bodyParser from "body-parser"
+import {getEmail, listEmails} from "./controllers/imap";
 
 const app = express();
 
-app.get("/hello", (req, res, next) => {
-  return res.status(200).json({
-    message: "Hello, World!",
-  });
-});
-
-app.get("/error", (req, res, next) => {
-  const err = new Error();
-  return next(err);
-});
-
-app.use((req, res, next) => {
-  return res.status(404).json({
-    message: "Not Found",
-  });
-});
-
 app.use(((err, req, res, next) => {
-  return res.status(500).json({
-    message: "Internal Server Error",
-  });
+    return res.status(500).json({
+        message: "Internal Server Error",
+    });
 }) as express.ErrorRequestHandler);
 
-export { app };
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
+
+app.post("/emails", asyncHandler(imapController.listEmails));
+
+app.post("/emails/:uid", asyncHandler(imapController.getEmail));
+
+app.use((req, res, next) => {
+    return res.status(404).json({
+        message: "Not Found",
+    });
+});
+
+export {app};
