@@ -43,9 +43,9 @@ export const getEmail = async (req: Request, res: Response) => {
     const lock = await client.getMailboxLock('INBOX');
     try {
         let message = await client.fetchOne(uid, imapQueryOptionsWhenGetOne, {uid: true});
-        if(message == false){
+        if (message == false) {
             res.status(404).send();
-        }else{
+        } else {
             res.status(200).json(message);
         }
     } finally {

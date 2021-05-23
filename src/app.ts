@@ -1,8 +1,7 @@
 import * as express from "express";
 import * as imapController from "./controllers/imap";
-import * as  asyncHandler from "express-async-handler";
+import * as asyncHandler from "express-async-handler";
 import * as bodyParser from "body-parser"
-import {getEmail, listEmails} from "./controllers/imap";
 
 const app = express();
 
