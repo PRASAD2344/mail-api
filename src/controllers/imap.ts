@@ -28,7 +28,7 @@ export const listEmails = async (req: Request, res: Response) => {
         for await (let message of client.fetch('1:*', imapQueryOptionsWhenGetAll)) {
             messages.push(message);
         }
-        res.status(200).json(messages);
+        res.status(200).send(toString(messages));
     } finally {
         lock.release();
         await client.logout();
@@ -46,10 +46,16 @@ export const getEmail = async (req: Request, res: Response) => {
         if (message == false) {
             res.status(404).send();
         } else {
-            res.status(200).json(message);
+            res.status(200).send(toString(message));
         }
     } finally {
         lock.release();
         await client.logout();
     }
+}
+
+const toString = (data: any) => {
+    return JSON.stringify(data, (key, value) =>
+        typeof value === "bigint" ? value.toString() + "n" : value
+    );
 }
