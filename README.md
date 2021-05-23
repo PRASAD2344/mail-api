@@ -137,4 +137,11 @@
     "id": "242e8c13c9fa3c2b57a2b485329039b1"
 }
 ```
+>###Running tests
+1. Simply run `npm test`
 
+>###Out of scope
+1. Emails will be retrieved from `INBOX` path aka folder only, if we need to consider other folders another endpoint has to be written to list all available folders in IMAP server.
+2. Pagination is not implemented while listing all emails
+3. In the UI, we will be showing message body along with attachments. But attachments will not be downloaded, as new endpoint will be required here.
+4. Added test cases only for the controller handler file, as remaining files were the configurations more or less. If we need to test configurations also, we might need to consider `postman` framework.

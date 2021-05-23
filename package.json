@@ -5,7 +5,8 @@
   "scripts": {
     "start": "serverless offline",
     "deploy": "serverless deploy",
-    "remove": "serverless remove"
+    "remove": "serverless remove",
+    "test": "jest"
   },
   "dependencies": {
     "aws-serverless-express": "^3.4.0",
@@ -15,12 +16,16 @@
     "imapflow": "^1.0.57"
   },
   "devDependencies": {
+    "@jest-mock/express": "^1.4.1",
     "@types/aws-serverless-express": "^3.3.3",
     "@types/express": "^4.17.11",
+    "@types/jest": "^26.0.23",
     "@types/node": "^14.14.22",
+    "jest": "^26.6.3",
     "serverless": "^2.20.1",
     "serverless-offline": "^6.8.0",
     "serverless-plugin-typescript": "^1.1.9",
+    "ts-jest": "^26.5.6",
     "typescript": "^4.1.3"
   }
 }

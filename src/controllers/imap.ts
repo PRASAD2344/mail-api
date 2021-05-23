@@ -32,6 +32,7 @@ export const listEmails = async (req: Request, res: Response) => {
     } finally {
         lock.release();
         await client.logout();
+        client.clearSocketHandlers();
     }
 }
 
@@ -51,11 +52,12 @@ export const getEmail = async (req: Request, res: Response) => {
     } finally {
         lock.release();
         await client.logout();
+        client.clearSocketHandlers();
     }
 }
 
 const toString = (data: any) => {
     return JSON.stringify(data, (key, value) =>
-        typeof value === "bigint" ? value.toString() + "n" : value
+        typeof value === "bigint" ? value.toString() : value
     );
 }
