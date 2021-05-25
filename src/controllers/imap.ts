@@ -15,14 +15,18 @@ const imapQueryOptionsWhenGetOne = {
 
 const imapQueryOptionsWhenGetAll = {
     envelope: true,
-    internalDate: true
+    internalDate: true,
+    uid: true,
 };
+
+const defaultPath = 'INBOX';
 
 export const listEmails = async (req: Request, res: Response) => {
     const imapClientConfiguration = req.body as IMAPClientConfiguration;
+    const path = req.query.path ? req.query.path : defaultPath;
     const client = new ImapFlow(imapClientConfiguration);
     await client.connect();
-    const lock = await client.getMailboxLock('INBOX');
+    const lock = await client.getMailboxLock(path);
     try {
         let messages = [];
         for await (let message of client.fetch('1:*', imapQueryOptionsWhenGetAll)) {
@@ -38,10 +42,11 @@ export const listEmails = async (req: Request, res: Response) => {
 
 export const getEmail = async (req: Request, res: Response) => {
     const uid = req.params.uid as string;
+    const path = req.query.path ? req.query.path : defaultPath;
     const imapClientConfiguration = req.body as IMAPClientConfiguration;
     const client = new ImapFlow(imapClientConfiguration);
     await client.connect();
-    const lock = await client.getMailboxLock('INBOX');
+    const lock = await client.getMailboxLock(path);
     try {
         let message = await client.fetchOne(uid, imapQueryOptionsWhenGetOne, {uid: true});
         if (message == false) {
@@ -51,6 +56,19 @@ export const getEmail = async (req: Request, res: Response) => {
         }
     } finally {
         lock.release();
+        await client.logout();
+        client.clearSocketHandlers();
+    }
+}
+
+export const listMailBoxes = async (req: Request, res: Response) => {
+    const imapClientConfiguration = req.body as IMAPClientConfiguration;
+    const client = new ImapFlow(imapClientConfiguration);
+    await client.connect();
+    try {
+        let folders = await client.list();
+        res.status(200).send(toString(folders));
+    } finally {
         await client.logout();
         client.clearSocketHandlers();
     }
