@@ -8,9 +8,9 @@ const imapQueryOptionsWhenGetOne = {
 };
 
 const imapQueryOptionsWhenGetAll = {
+    uid: true,
     envelope: true,
     internalDate: true,
-    uid: true,
 };
 
 const defaultPath = 'INBOX';
