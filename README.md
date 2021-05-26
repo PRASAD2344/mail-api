@@ -26,7 +26,7 @@
 
 >### Endpoints
 ###[https://ao9zm46qp0.execute-api.us-east-1.amazonaws.com/dev/mailBoxes](https://ao9zm46qp0.execute-api.us-east-1.amazonaws.com/dev/mailBoxes)
-**Description**: List paths for an account i.e., inbox, spam, and trash
+**Description**: List paths for an account i.e., inbox, spam, and trash  
 **Method Type**: POST  
 **Request Body**:  
 ```json
@@ -123,8 +123,8 @@
 ]
 ```
 ###[https://ao9zm46qp0.execute-api.us-east-1.amazonaws.com/dev/emails?path=INBOX](https://ao9zm46qp0.execute-api.us-east-1.amazonaws.com/dev/emails?path=INBOX)
-**Description**: List emails
-**Query parameter**: Path, if not provided we will default to `inbox`
+**Description**: List emails  
+**Query parameter**: Path, if not provided we will default to `inbox`  
 **Method Type**: POST  
 **Request Body**:
 ```json
@@ -168,9 +168,9 @@
 ```
 
 ###[https://ao9zm46qp0.execute-api.us-east-1.amazonaws.com/dev/emails/52?path=INBOX](https://ao9zm46qp0.execute-api.us-east-1.amazonaws.com/dev/emails/52?path=INBOX)
-**Description**: Get a particular email
-**Query parameter**: Path, if not provided we will default to `inbox`
-**Path variable**: Uid aka unique id
+**Description**: Get a particular email  
+**Query parameter**: Path, if not provided we will default to `inbox`  
+**Path variable**: Uid aka unique id  
 **Method Type**: POST  
 **Request Body**:
 ```json
