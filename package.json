@@ -14,7 +14,8 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-async-handler": "^1.1.4",
-    "imapflow": "^1.0.57"
+    "imapflow": "^1.0.57",
+    "mailparser": "^3.2.0"
   },
   "devDependencies": {
     "@jest-mock/express": "^1.4.1",

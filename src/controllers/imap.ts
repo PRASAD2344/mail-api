@@ -1,16 +1,10 @@
 import {Request, Response} from 'express';
 import {ImapFlow} from 'imapflow'
+import {simpleParser} from 'mailparser';
 
 const imapQueryOptionsWhenGetOne = {
-    uid: true,
-    flags: true,
-    bodyStructure: true,
     envelope: true,
-    internalDate: true,
-    emailId: true,
-    threadId: true,
-    xGmLabels: true,
-    headers: ['date', 'subject']
+    source: true,
 };
 
 const imapQueryOptionsWhenGetAll = {
@@ -48,12 +42,19 @@ export const getEmail = async (req: Request, res: Response) => {
     await client.connect();
     const lock = await client.getMailboxLock(path);
     try {
-        let message = await client.fetchOne(uid, imapQueryOptionsWhenGetOne, {uid: true});
-        if (message == false) {
+        let mail = await client.fetchOne(uid, imapQueryOptionsWhenGetOne, {uid: true});
+        if (mail == false) {
             res.status(404).send();
-        } else {
-            res.status(200).send(toString(message));
+            return;
         }
+        let messageData = await simpleParser(mail.source, {})
+        res.status(200).send(toString({
+            envelope: mail.envelope,
+            text: messageData.text,
+            html: messageData.html ? messageData.html : messageData.textAsHtml,
+            attachments: messageData.attachments
+        }));
+
     } finally {
         lock.release();
         await client.logout();
