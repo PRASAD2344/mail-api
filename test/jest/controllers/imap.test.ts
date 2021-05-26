@@ -1,4 +1,4 @@
-import {getEmail, listEmails} from '../../../src/controllers/imap';
+import {getEmail, listEmails, listMailBoxes} from '../../../src/controllers/imap';
 import {getMockReq, getMockRes} from '@jest-mock/express';
 
 describe('IMAP Handler Tests', () => {
@@ -10,7 +10,7 @@ describe('IMAP Handler Tests', () => {
         "secure": true,
         "auth": {
             "user": "pieeyecandidate@outlook.com",
-            "pass": "2021-codder#"
+            "pass": "U2FsdGVkX1/sJ2zYCOtzHnskim2tEMsjnvFg1z8uG9w="
         }
     };
 
@@ -37,6 +37,15 @@ describe('IMAP Handler Tests', () => {
             params: {uid: 5},
         });
         await getEmail(req, res);
+        expect(res.status).toHaveBeenCalledWith(200);
+    });
+
+    it('List mail boxes', async () => {
+        const req = getMockReq({
+            body: imapClientConfiguration,
+            params: {uid: 5},
+        });
+        await listMailBoxes(req, res);
         expect(res.status).toHaveBeenCalledWith(200);
     });
 
