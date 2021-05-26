@@ -1,6 +1,7 @@
 >### PreRequisites
 1. Install `Node.js` and `NPM` on your local machine
 2. Have `serverless` installed. Use `npm install -g serverless`
+3. Install dependencies by running `npm install`
 
 >### Running locally
 1. We can run our application locally by typing `npm start`. Please note that there is no need of serverless login, and it has been tested
@@ -18,129 +19,200 @@
 >### Removing our lambda from AWS
 1. Simple run `npm run remove`
 
+>### Password encryption over the wire
+1. To the API we will get encrypted password, to be specific AES encrypted using encryption key `j7WM}xMj9w|hkdG`
+2. So, please send encrypted password while doing postman testing.
+3. For the sample account provided in the assignment, encrypted password will be `U2FsdGVkX1/sJ2zYCOtzHnskim2tEMsjnvFg1z8uG9w=`
+
 >### Endpoints
-###[https://me1x6y8d12.execute-api.us-east-1.amazonaws.com/dev/emails](https://me1x6y8d12.execute-api.us-east-1.amazonaws.com/dev/emails)
-**Description**: Get all emails  
+###[https://ao9zm46qp0.execute-api.us-east-1.amazonaws.com/dev/mailBoxes](https://ao9zm46qp0.execute-api.us-east-1.amazonaws.com/dev/mailBoxes)
+**Description**: List paths for an account i.e., inbox, spam, and trash
 **Method Type**: POST  
 **Request Body**:  
 ```json
 {
-    "host": "outlook.office365.com",
-    "port": 993,
-    "secure": true,
-    "auth": {
-        "user":"pieeyecandidate@outlook.com",
-        "pass":"2021-codder#"
-    }
+   "host": "outlook.office365.com",
+   "port": 993,
+   "secure": true,
+   "auth": {
+      "user": "pieeyecandidate@outlook.com",
+      "pass": "U2FsdGVkX1/sJ2zYCOtzHnskim2tEMsjnvFg1z8uG9w="
+   }
 }
 ```
 **Response JSON**:
 ```json
 [
-    {
-        "seq": 1,
-        "envelope": {
-            "date": "2021-05-04T19:10:27.000Z",
-            "subject": "Welcome to your new Outlook.com account",
-            "from": [
-                {
-                    "name": "Outlook Team",
-                    "address": "no-reply@microsoft.com"
-                }
-            ],
-            "to": [
-                {
-                    "name": "PieEye Candidate",
-                    "address": "pieeyecandidate@outlook.com"
-                }
-            ],
-            "messageId": "<BY5PR11MB388009AB17B7A2BE8253E654AC5A9@BY5PR11MB3880.namprd11.prod.outlook.com>"
-        },
-        "internalDate": "2021-05-04T19:10:27.000Z",
-        "uid": 5,
-        "id": "a3e507a857a3ed3e496b2ee95045d2aa"
-    }
+   {
+      "path": "Archive",
+      "flags": {},
+      "delimiter": "/",
+      "listed": true,
+      "parent": [],
+      "name": "Archive",
+      "subscribed": true
+   },
+   {
+      "path": "Deleted",
+      "flags": {},
+      "delimiter": "/",
+      "listed": true,
+      "parent": [],
+      "name": "Deleted",
+      "specialUse": "\\Trash",
+      "subscribed": true
+   },
+   {
+      "path": "Drafts",
+      "flags": {},
+      "delimiter": "/",
+      "listed": true,
+      "parent": [],
+      "name": "Drafts",
+      "specialUse": "\\Drafts",
+      "subscribed": true
+   },
+   {
+      "path": "INBOX",
+      "flags": {},
+      "delimiter": "/",
+      "listed": true,
+      "specialUse": "\\Inbox",
+      "parent": [],
+      "name": "Inbox",
+      "subscribed": true
+   },
+   {
+      "path": "Junk",
+      "flags": {},
+      "delimiter": "/",
+      "listed": true,
+      "parent": [],
+      "name": "Junk",
+      "specialUse": "\\Junk",
+      "subscribed": true
+   },
+   {
+      "path": "Notes",
+      "flags": {},
+      "delimiter": "/",
+      "listed": true,
+      "parent": [],
+      "name": "Notes",
+      "subscribed": true
+   },
+   {
+      "path": "Outbox",
+      "flags": {},
+      "delimiter": "/",
+      "listed": true,
+      "parent": [],
+      "name": "Outbox",
+      "subscribed": true
+   },
+   {
+      "path": "Sent",
+      "flags": {},
+      "delimiter": "/",
+      "listed": true,
+      "parent": [],
+      "name": "Sent",
+      "specialUse": "\\Sent",
+      "subscribed": true
+   }
 ]
 ```
-###[ https://me1x6y8d12.execute-api.us-east-1.amazonaws.com/dev/emails/10]( https://me1x6y8d12.execute-api.us-east-1.amazonaws.com/dev/emails/10)
-**Description**: Get single email  
-**Path Variable**: Email UID  
+###[https://ao9zm46qp0.execute-api.us-east-1.amazonaws.com/dev/emails?path=INBOX](https://ao9zm46qp0.execute-api.us-east-1.amazonaws.com/dev/emails?path=INBOX)
+**Description**: List emails
+**Query parameter**: Path, if not provided we will default to `inbox`
 **Method Type**: POST  
 **Request Body**:
 ```json
 {
-    "host": "outlook.office365.com",
-    "port": 993,
-    "secure": true,
-    "auth": {
-        "user":"pieeyecandidate@outlook.com",
-        "pass":"2021-codder#"
-    }
+   "host": "outlook.office365.com",
+   "port": 993,
+   "secure": true,
+   "auth": {
+      "user": "pieeyecandidate@outlook.com",
+      "pass": "U2FsdGVkX1/sJ2zYCOtzHnskim2tEMsjnvFg1z8uG9w="
+   }
+}
+```
+**Response Body**:
+```json
+[
+   {
+      "seq": 8,
+      "uid": 52,
+      "envelope": {
+         "date": "2021-05-24T13:12:17.000Z",
+         "subject": "Testing plain text email",
+         "from": [
+            {
+               "name": "Ambuj Kumar",
+               "address": "itsambuja@gmail.com"
+            }
+         ],
+         "to": [
+            {
+               "name": "",
+               "address": "pieeyecandidate@outlook.com"
+            }
+         ],
+         "messageId": "<CAGdM79OYMcDS00gqv=QM6Mrb5fD8Ku8JsXcMxgrxeJa5Sj2opA@mail.gmail.com>"
+      },
+      "internalDate": "2021-05-24T13:12:31.000Z",
+      "id": "a3eac0e5f81f4bda218b9423d549d510"
+   }
+]
+```
+
+###[https://ao9zm46qp0.execute-api.us-east-1.amazonaws.com/dev/emails/52?path=INBOX](https://ao9zm46qp0.execute-api.us-east-1.amazonaws.com/dev/emails/52?path=INBOX)
+**Description**: Get a particular email
+**Query parameter**: Path, if not provided we will default to `inbox`
+**Path variable**: Uid aka unique id
+**Method Type**: POST  
+**Request Body**:
+```json
+{
+   "host": "outlook.office365.com",
+   "port": 993,
+   "secure": true,
+   "auth": {
+      "user": "pieeyecandidate@outlook.com",
+      "pass": "U2FsdGVkX1/sJ2zYCOtzHnskim2tEMsjnvFg1z8uG9w="
+   }
 }
 ```
 **Response Body**:
 ```json
 {
-    "seq": 2,
-    "uid": 10,
-    "flags": {},
-    "bodyStructure": {
-        "childNodes": [
-            {
-                "part": "1",
-                "type": "text/plain",
-                "parameters": {
-                    "charset": "utf-8"
-                },
-                "encoding": "7bit",
-                "size": 552,
-                "lineCount": 13
-            },
-            {
-                "part": "2",
-                "type": "text/html",
-                "parameters": {
-                    "charset": "utf-8"
-                },
-                "encoding": "7bit",
-                "size": 3520,
-                "lineCount": 34
-            }
-        ],
-        "type": "multipart/alternative",
-        "parameters": {
-            "boundary": "=-WEbof0BqeYqLLExp7Jhwng=="
-        }
-    },
-    "envelope": {
-        "date": "2021-05-04T19:12:49.000Z",
-        "subject": "Microsoft account security info was added",
-        "from": [
-            {
-                "name": "Microsoft account team",
-                "address": "account-security-noreply@accountprotection.microsoft.com"
-            }
-        ],
-        "to": [
-            {
-                "name": "",
-                "address": "pieeyecandidate@outlook.com"
-            }
-        ],
-        "messageId": "<51BU58V6NDU4.K35W6IE4JLNV@BL02EPF00001955>"
-    },
-    "internalDate": "2021-05-04T19:12:52.000Z",
-    "headers": {
-        "type": "Buffer",
-        "data": []
-    },
-    "id": "242e8c13c9fa3c2b57a2b485329039b1"
+   "envelope": {
+      "date": "2021-05-24T13:12:17.000Z",
+      "subject": "Testing plain text email",
+      "from": [
+         {
+            "name": "Ambuj Kumar",
+            "address": "itsambuja@gmail.com"
+         }
+      ],
+      "to": [
+         {
+            "name": "",
+            "address": "pieeyecandidate@outlook.com"
+         }
+      ],
+      "messageId": "<CAGdM79OYMcDS00gqv=QM6Mrb5fD8Ku8JsXcMxgrxeJa5Sj2opA@mail.gmail.com>"
+   },
+   "text": "Hello, This email contains only text.\n",
+   "html": "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"><div dir=\"ltr\">Hello, This email contains only text.</div>\n",
+   "attachments": []
 }
 ```
+
 >###Running tests
 1. Simply run `npm test`
 
->###Out of scope
+>###Below items were not implemented
 1. Pagination is not implemented while listing all emails
-2. In the UI, we will be showing message body along with attachments. But attachments will not be downloaded, as new endpoint will be required here.
-3. Added test cases only for the controller handler file, as remaining files were the configurations more or less. If we need to test configurations also, we might need to consider `postman` framework.
+2. Added test cases only for the controller handler file, as remaining files were the configurations more or less. If we need to test configurations also, we might need to consider `postman` framework.
